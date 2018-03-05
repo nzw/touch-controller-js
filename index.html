@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="author" content="nzw">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+	#range {
+		width: 100%;
+		height: 200px;
+		background-color: #000;
+	}
+</style>
+</head>
+<body>
+	<div id="range">test</div>
+	<script src="lib/bind.js"></script>
+	<script src="src/touch.js"></script>
+	<script>
+		var config = {
+			target: document.getElementById('range'),
+			speed : 500,
+			range : {
+				x: 0,
+				y: 0,
+				w: 500,
+				h: 300
+			},
+			fluctuation: 0.1,
+			callback: {
+				start: startEvent,
+				move : moveEvent,
+				end  : endEvent
+			}
+		};
+		TouchCtrl.init(config);
+		function startEvent(e) {
+			console.log('startEvent');
+			console.log(this.locate);
+			console.log(e);
+		}
+		function moveEvent(e) {
+			console.log('moveEvent');
+			console.log(this.locate);
+			console.log(e);
+		}
+		function endEvent(e) {
+			console.log('endEvent');
+			console.log(this.locate);
+			console.log(e);
+		}
+	</script>
+</body>
+</html>
