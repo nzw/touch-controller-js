@@ -15,9 +15,9 @@
 	function init(data) {
 		data          = _initObject(data);
 		data.range    = _initObject(data.range);
-		this.target   = data.target || _doc.getElementsByTagName('body')[0];
 		this.callback = _initObject(data.callback);
-		this.speed    = data.speed || 200;
+		this.target   = data.target || _doc.getElementsByTagName('body')[0];
+		this.speed    = data.speed  || 200;
 		this.range    = {
 			x : data.range.x || 0,
 			y : data.range.y || 0,

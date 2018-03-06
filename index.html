@@ -8,7 +8,7 @@
 <meta name="author" content="nzw">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-	#range {
+	#controller {
 		width: 100%;
 		height: 200px;
 		background-color: #000;
@@ -16,12 +16,12 @@
 </style>
 </head>
 <body>
-	<div id="range">test</div>
+	<div id="controller">test</div>
 	<script src="lib/bind.js"></script>
-	<script src="src/touch.js"></script>
+	<script src="src/touch-ctrl.js"></script>
 	<script>
 		var config = {
-			target: document.getElementById('range'),
+			target: document.getElementById('controller'),
 			speed : 500,
 			range : {
 				x: 0,
