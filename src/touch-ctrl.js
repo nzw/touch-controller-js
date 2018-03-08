@@ -2,7 +2,13 @@
 	'use strict';
 	var _doc = global.document;
 
-	function TouchCtrl(data) {}
+	function TC(data) {
+		new TouchCtrl(data);
+	}
+
+	function TouchCtrl(data) {
+		this.init(data);
+	}
 
 	TouchCtrl.prototype = {
 		init:   init,
@@ -130,5 +136,5 @@
 		return typeof data === 'object' ? data : {};
 	}
 
-	global.TouchCtrl = new TouchCtrl();
+	global.TouchCtrl = TC;
 })(this.self || window);
