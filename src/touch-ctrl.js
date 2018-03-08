@@ -98,15 +98,15 @@
 				? true : false;
 		var isTop, isRight, isBottom, isLeft;
 		if (isStop && this.prevLocate) {
-			isTop = this.prevLocate.t;
-			isRight = this.prevLocate.r;
+			isTop    = this.prevLocate.t;
+			isRight  = this.prevLocate.r;
 			isBottom = this.prevLocate.b;
-			isLeft = this.prevLocate.l;
+			isLeft   = this.prevLocate.l;
 		} else {
-			isTop = distanceY < this.fluctuation ? true : false;
-			isRight = distanceX < this.fluctuation ? true : false;
+			isTop    = distanceY < this.fluctuation ? true : false;
+			isRight  = distanceX < this.fluctuation ? true : false;
 			isBottom = distanceY > this.fluctuation ? true : false;
-			isLeft = distanceX > this.fluctuation ? true : false;
+			isLeft   = distanceX > this.fluctuation ? true : false;
 		}
 		return {
 			x  : x,
