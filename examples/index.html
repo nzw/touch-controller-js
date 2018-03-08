@@ -17,8 +17,8 @@
 </head>
 <body>
 	<div id="controller">test</div>
-	<script src="lib/bind.js"></script>
-	<script src="src/touch-ctrl.js"></script>
+	<script src="../lib/bind.js"></script>
+	<script src="../src/touch-ctrl.js"></script>
 	<script>
 		var config = {
 			target: document.getElementById('controller'),
@@ -37,20 +37,20 @@
 			}
 		};
 		TouchCtrl.init(config);
-		function startEvent(e) {
+		function startEvent() {
 			console.log('startEvent');
-			console.log(this.locate);
-			console.log(e);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
 		}
-		function moveEvent(e) {
+		function moveEvent() {
 			console.log('moveEvent');
-			console.log(this.locate);
-			console.log(e);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
 		}
-		function endEvent(e) {
+		function endEvent() {
 			console.log('endEvent');
-			console.log(this.locate);
-			console.log(e);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
 		}
 	</script>
 </body>

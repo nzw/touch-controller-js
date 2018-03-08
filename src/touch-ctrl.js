@@ -44,7 +44,7 @@
 		this.nowY     = this.locate.y;
 		this.initTime = Date.now();
 		if (this.callback.start) {
-			this.startKey = setInterval(this.callback.start.call(this, e), this.speed);
+			this.startKey = setInterval(this.callback.start(e, this.locate), this.speed);
 		}
 		this.target.addEventListener(this.eventType['move'],   this.move.bind(this),   false);
 		this.target.addEventListener(this.eventType['end'],    this.end.bind(this),    false);
@@ -62,14 +62,14 @@
 			return;
 		}
 		if (this.callback.move) {
-			this.callback.move.call(this, e);
+			this.callback.move(e, this.locate);
 		}
 		this.prevLocate = this.locate;
 	}
 
 	function end(e) {
 		if (this.callback.end) {
-			this.callback.end.call(this, e);
+			this.callback.end(e, this.locate);
 		}
 		this.remove();
 	}
