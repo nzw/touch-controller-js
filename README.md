@@ -97,3 +97,12 @@ config の設定を行わなくても利用可能。
 	isMove : !isStop	// 移動情報（Boolean)
 }
 ```
+## Compile src/touch.js
+```
+gulp babel
+```
+
+## Watch src/touch.js
+```
+gulp watch
+```
