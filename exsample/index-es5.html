@@ -8,7 +8,7 @@
 <meta name="author" content="nzw">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-	#range {
+	#controller {
 		width: 100%;
 		height: 200px;
 		background-color: #000;
@@ -16,12 +16,12 @@
 </style>
 </head>
 <body>
-	<div id="range">test</div>
+	<div id="controller">test</div>
 	<script src="../lib/bind.js"></script>
-	<script src="../build/touch-es5.js"></script>
+	<script src="../src/touch-ctrl-es5.js"></script>
 	<script>
 		var config = {
-			target: document.getElementById('range'),
+			target: document.getElementById('controller'),
 			speed : 500,
 			range : {
 				x: 0,
@@ -36,21 +36,21 @@
 				end  : endEvent
 			}
 		};
-		TouchCtrl.init(config);
-		function startEvent(e) {
+		TouchCtrl(config);
+		function startEvent() {
 			console.log('startEvent');
-			console.log(this.locate);
-			console.log(e);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
 		}
-		function moveEvent(e) {
+		function moveEvent() {
 			console.log('moveEvent');
-			console.log(this.locate);
-			console.log(e);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
 		}
-		function endEvent(e) {
+		function endEvent() {
 			console.log('endEvent');
-			console.log(this.locate);
-			console.log(e);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
 		}
 	</script>
 </body>

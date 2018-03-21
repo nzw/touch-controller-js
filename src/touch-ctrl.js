@@ -1,22 +1,11 @@
-;(function(global) {
-	'use strict';
-	var _doc = global.document;
+const _doc = window.document;
 
-	function TouchCtrl(data) {}
-
-	TouchCtrl.prototype = {
-		init:   init,
-		start:  start,
-		move:   move,
-		end:    end,
-		remove: remove
-	};
-
-	function init(data) {
-		data          = _initObject(data);
-		data.range    = _initObject(data.range);
+class TouchCtrl {
+	constructor(data) {
+		data          = initObject(data);
+		data.range    = initObject(data.range);
 		this.target   = data.target || _doc.getElementsByTagName('body')[0];
-		this.callback = _initObject(data.callback);
+		this.callback = initObject(data.callback);
 		this.speed    = data.speed || 200;
 		this.range    = {
 			x : data.range.x || 0,
@@ -26,7 +15,7 @@
 		};
 		this.range['max_x'] = this.range.x + this.range.w;
 		this.range['max_y'] = this.range.y + this.range.h;
-		var isTouch = ('ontouchstart' in window) ? true : false;
+		let isTouch = ('ontouchstart' in window) ? true : false;
 		this.eventType = {
 			start:  isTouch ? 'touchstart'  : 'mousedown',
 			move:   isTouch ? 'touchmove'   : 'mousemove',
@@ -38,13 +27,13 @@
 		this.target.addEventListener(this.eventType['start'], this.start.bind(this), false);
 	}
 
-	function start(e) {
-		this.locate   = _touchLocation.call(this, e);
+	start(e) {
+		this.locate   = this.touchLocation.call(this, e);
 		this.nowX     = this.locate.x;
 		this.nowY     = this.locate.y;
 		this.initTime = Date.now();
 		if (this.callback.start) {
-			this.startKey = setInterval(this.callback.start.call(this, e), this.speed);
+			this.startKey = setInterval(this.callback.start(e, this.locate), this.speed);
 		}
 		this.target.addEventListener(this.eventType['move'],   this.move.bind(this),   false);
 		this.target.addEventListener(this.eventType['end'],    this.end.bind(this),    false);
@@ -52,9 +41,9 @@
 		this.isClearTouchEvent = false;
 	}
 
-	function move(e) {
+	move(e) {
 		if (this.isClearTouchEvent) return undefined;
-		this.locate = _touchLocation.call(this, e);
+		this.locate = this.touchLocation.call(this, e);
 		if (this.locate.x < this.range.x || this.locate.x > this.range.max_x
 			|| this.locate.y < this.range.y || this.locate.y > this.range.max_y
 		) {
@@ -62,20 +51,19 @@
 			return;
 		}
 		if (this.callback.move) {
-			this.callback.move.call(this, e);
+			this.callback.move(e, this.locate);
 		}
 		this.prevLocate = this.locate;
 	}
 
-	function end(e) {
+	end(e) {
 		if (this.callback.end) {
-			this.callback.end.call(this, e);
+			this.callback.end(e, this.locate);
 		}
 		this.remove();
 	}
 
-
-	function remove() {
+	remove() {
 		this.locate = {};
 		this.target.removeEventListener(this.eventType['move'],   this.move,   true);
 		this.target.removeEventListener(this.eventType['end'],    this.end,    true);
@@ -84,29 +72,29 @@
 		clearInterval(this.startKey);
 	}
 
-	function _touchLocation() {
-		var e = arguments[0];
+	touchLocation() {
+		const e = arguments[0];
 		if(!arguments[0]) return undefined;
-		var x = _cutDecimal(this.isTouch ? e.touches[0].clientX : e.pageX);
-		var y = _cutDecimal(this.isTouch ? e.touches[0].clientY : e.pageY);
-		var prevX = this.prevLocate ? this.prevLocate.x : x;
-		var prevY = this.prevLocate ? this.prevLocate.y : y;
-		var distanceX = _cutDecimal(x - (prevX || x));
-		var distanceY = _cutDecimal(y - (prevY || y));
-		var isStop = (Math.abs(distanceX) < this.fluctuation
+		let x = cutDecimal(this.isTouch ? e.touches[0].clientX : e.pageX);
+		let y = cutDecimal(this.isTouch ? e.touches[0].clientY : e.pageY);
+		let prevX = this.prevLocate ? this.prevLocate.x : x;
+		let prevY = this.prevLocate ? this.prevLocate.y : y;
+		let distanceX = cutDecimal(x - (prevX || x));
+		let distanceY = cutDecimal(y - (prevY || y));
+		let isStop = (Math.abs(distanceX) < this.fluctuation
 				&& Math.abs(distanceY) < this.fluctuation)
 				? true : false;
-		var isTop, isRight, isBottom, isLeft;
+		let isTop, isRight, isBottom, isLeft;
 		if (isStop && this.prevLocate) {
-			isTop = this.prevLocate.t;
-			isRight = this.prevLocate.r;
+			isTop    = this.prevLocate.t;
+			isRight  = this.prevLocate.r;
 			isBottom = this.prevLocate.b;
-			isLeft = this.prevLocate.l;
+			isLeft   = this.prevLocate.l;
 		} else {
-			isTop = distanceY < this.fluctuation ? true : false;
-			isRight = distanceX < this.fluctuation ? true : false;
+			isTop    = distanceY < this.fluctuation ? true : false;
+			isRight  = distanceX < this.fluctuation ? true : false;
 			isBottom = distanceY > this.fluctuation ? true : false;
-			isLeft = distanceX > this.fluctuation ? true : false;
+			isLeft   = distanceX > this.fluctuation ? true : false;
 		}
 		return {
 			x  : x,
@@ -122,13 +110,11 @@
 		};
 	}
 
-	function _cutDecimal(int) {
-		return Math.floor(int * 100) / 100;
-	}
+}
+const cutDecimal = int => {
+	return Math.floor(int * 100) / 100;
+};
 
-	function _initObject(data) {
-		return typeof data === 'object' ? data : {};
-	}
-
-	global.TouchCtrl = new TouchCtrl();
-})(this.self || window);
+const initObject = data => {
+	return typeof data === 'object' ? data : {};
+};
